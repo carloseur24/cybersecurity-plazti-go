@@ -27,7 +27,7 @@ func main(){
 
 	router.HandleFunc("/hello",postHandler).Methods("POST")
 
-	fmt.Println("Server is running on port 8080")
+	fmt.Println("Server esta corrindo no porto 8080")
 	err := http.ListenAndServe(":8080", router)
 
 	if err != nil {
