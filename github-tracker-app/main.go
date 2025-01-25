@@ -3,11 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
-	"github-tracker/github-tracker-app/models"
-	"github-tracker/github-tracker-app/repository/entity"
 	"io"
 	"net/http"
 	"time"
+
+	"github-tracker/github-tracker-app/models"
+	"github-tracker/github-tracker-app/repository"
+	"github-tracker/github-tracker-app/repository/entity"
 
 	"github.com/gorilla/mux"
 )
@@ -37,6 +39,8 @@ func insertGitHubWebhook(ctx context.Context, repo repository.Commit, webhook mo
 		CreatedAt:      createdTime,
 		UpdatedAt:      createdTime,
 	}
+	err = repo.Insert(ctx, &commit)
+	return err
 }
 
 func main() {

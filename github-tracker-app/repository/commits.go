@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"github-tracker/github-tracker-app/repository/entity"
 )
 
@@ -17,10 +18,9 @@ type commit struct {
 
 func NewCommit(conn *sql.DB) commit {
 	return commit{
-		Conn: conn
+		Conn: conn,
 	}
 }
-
 
 func (m commit) Insert(ctx context.Context, commit *entity.Commit) (err error) {
 	query := `
@@ -45,13 +45,11 @@ func (m commit) Insert(ctx context.Context, commit *entity.Commit) (err error) {
 		commit.CreatedAt,
 		commit.UpdatedAt,
 	).Err()
-	
 
 	return err
 }
 
-
-func (m commit) GetCommitByAuthorEmail(ctx context.Context, email string) (commits []Commit, err error) {
+func (m commit) GetCommitByAuthorEmail(ctx context.Context, email string) (commits []entity.Commit, err error) {
 	query := `
 			SELECT *
 			FROM commits
@@ -60,27 +58,27 @@ func (m commit) GetCommitByAuthorEmail(ctx context.Context, email string) (commi
 
 	rows, err := m.Conn.QueryContext(ctx, query, email)
 	if err != nil {
-			return nil, fmt.Errorf("erro ao executar a query: %w", err)
+		return nil, fmt.Errorf("erro ao executar a query: %w", err)
 	}
 	defer rows.Close()
-	var commits []entity.Commit
+
 	for rows.Next() {
-			var commit entity.Commit
-			err := rows.Scan(
-					&commit.ID,
-					&commit.RepoName,
-					&commit.CommitID,
-					&commit.CommitMessage,
-					&commit.AuthorUsername,
-					&commit.AuthorEmail,
-					&commit.Payload,
-					&commit.CreatedAt,
-					&commit.UpdatedAt,
-			)
-			if err != nil {
-					return nil, fmt.Errorf("erro ao escanear a linha: %w", err)
-			}
-			commits = append(commits, commit)
+		var commit entity.Commit
+		err := rows.Scan(
+			&commit.ID,
+			&commit.RepoName,
+			&commit.CommitID,
+			&commit.CommitMessage,
+			&commit.AuthorUsername,
+			&commit.AuthorEmail,
+			&commit.Payload,
+			&commit.CreatedAt,
+			&commit.UpdatedAt,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("erro ao escanear a linha: %w", err)
+		}
+		commits = append(commits, commit)
 	}
 	if err := rows.Err(); err != nil { // Verifica erros após o loop
 		return nil, fmt.Errorf("erro durante a iteração nas linhas: %w", err)
