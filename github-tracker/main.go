@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"time"
 
-	"github-tracker/github-tracker-app/models"
-	"github-tracker/github-tracker-app/repository"
-	"github-tracker/github-tracker-app/repository/entity"
+	"github-tracker/github-tracker/models"
+	"github-tracker/github-tracker/repository"
+	"github-tracker/github-tracker/repository/entity"
 
 	"github.com/gorilla/mux"
 )

@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github-tracker/github-tracker-app/repository/entity"
+	"github-tracker/github-tracker/repository/entity"
 )
 
 type Commit interface {

@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"github-tracker/github-tracker-app/repository/entity"
+	"github-tracker/github-tracker/repository/entity"
 
 	"github.com/stretchr/testify/mock"
 )
