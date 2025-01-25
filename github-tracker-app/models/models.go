@@ -1,18 +1,18 @@
 package models
 
-type Commit struct {
-	ID      string     `json:"id"`
-	Message string     `json:"message"`
-	Author  CommitUser `json:"author"`
+type GitHubWebhook struct {
+	Repository Repository `json:"repository"`
+	HeadCommit Commit     `json:"head_commit"`
 }
 
 type Repository struct {
 	FullName string `json:"full_name"`
 }
 
-type PushEvent struct {
-	Repository Repository `json:"repository"`
-	HeadCommit Commit     `json:"head_commit"`
+type Commit struct {
+	ID      string     `json:"id"`
+	Message string     `json:"message"`
+	Author  CommitUser `json:"author"`
 }
 
 type CommitUser struct {
